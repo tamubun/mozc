@@ -689,7 +689,12 @@ void Composer::GetPreedit(string *left, string *focused, string *right) const {
 }
 
 void Composer::GetStringForPreedit(string *output) const {
+#if 0
   composition_->GetString(output);
+#else
+  // tamu
+  GetQueryForConversion(output);
+#endif
   TransformCharactersForNumbers(output);
   // If the input field type needs half ascii characters,
   // perform conversion here.
@@ -804,6 +809,7 @@ void Composer::GetQueryForPrediction(string *output) const {
     default: {}
   }
 
+#if 0
   string trimed_query;
   composition_->GetStringWithTrimMode(TRIM, &trimed_query);
 
@@ -817,6 +823,10 @@ void Composer::GetQueryForPrediction(string *output) const {
   string *base_query = GetBaseQueryForPrediction(&asis_query, &trimed_query);
   TransformCharactersForNumbers(base_query);
   Util::FullWidthAsciiToHalfWidthAscii(*base_query, output);
+#else
+  // tamu
+  GetQueryForConversion(output);
+#endif
 }
 
 void Composer::GetQueriesForPrediction(
